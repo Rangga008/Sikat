@@ -23,7 +23,8 @@ $query = "SELECT
             produk.photo, 
             produk.price, 
             produk.stock,
-            cart.quantity 
+            cart.quantity,
+            cart.condiments
           FROM cart 
           INNER JOIN produk ON cart.product_id = produk.id 
           WHERE cart.user_id = ?";
@@ -32,11 +33,6 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Mengambil daftar voucher
-$voucherQuery = "SELECT * FROM vouchers WHERE valid_until >= CURDATE()";
-$voucherStmt = $conn->prepare($voucherQuery);
-$voucherStmt->execute();
-$voucherResult = $voucherStmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -56,8 +52,36 @@ $voucherResult = $voucherStmt->get_result();
                 <div class="logo">
                     <a href="index.php"><img src="img/logo.png" alt="Logo"></a>
                 </div>
-                <!-- Other header elements remain the same -->
+                <form action="search.php" method="GET">
+                    <div class="search-bar">
+                        <input type="text" name="query" placeholder="Cari produk..."
+                            value="<?= htmlspecialchars($_GET['query'] ?? '') ?>" required>
+                        <button type="submit"><img src="img/search.png" alt="Search Icon" /></button>
+                    </div>
+                </form>
+                <div class="header-icons">
+                    <a href="cart.php"><img src="img/cart.png" alt="Cart Icon" /></a>
+                    <a href="messages.php"><img src="img/chat.png" alt="Chat Icon" /></a>
+                    <a href="profile.php"><img src="img/setting.png" alt="Settings Icon" /></a>
+                    <?php if ($isLoggedIn && $role === 'admin'): ?>
+                    <a href="admin/dashboard.php"><img src="img/inbox.png" alt="Inbox Icon" /></a>
+                    <?php endif; ?>
+                </div>
+                <div class="payment-section">
+                    <a href="checkout.php" class="pay-now-header">Bayar Sekarang</a>
+                </div>
+                <div class="login">
+                    <?php if ($isLoggedIn): ?>
+                    <p><?php echo $_SESSION['username']; ?>!</p>
+                    <a href="auth/logout.php">Logout</a>
+                    <?php else: ?>
+                    <a href="auth/login.php">Login</a>
+                    <a href="auth/register.php">SignUp</a>
+                    <?php endif; ?>
+                </div>
             </div>
+            <a href="index.php" class="back-link"><button class="back-button">← Kembali</button></a>
+            <h1>KERANJANG</h1>
         </div>
 
         <div class="content">
@@ -78,6 +102,27 @@ $voucherResult = $voucherStmt->get_result();
                             <span><?= $row['quantity'] ?></span>
                             <button name="action" value="increase">+</button>
                         </div>
+
+                        <!-- Condiments radio buttons -->
+                        <div class="condiments">
+                            <label>
+                                <input type="radio" name="condiments" value="sambal"
+                                    <?= !empty($row['condiments']) && strpos($row['condiments'], 'sambal') !== false ? 'checked' : '' ?>>
+                                Sambal
+                            </label>
+                            <label>
+                                <input type="radio" name="condiments" value="bawang"
+                                    <?= !empty($row['condiments']) && strpos($row['condiments'], 'bawang') !== false ? 'checked' : '' ?>>
+                                Bawang
+                            </label>
+                            <label>
+                                <input type="radio" name="condiments" value="lauk"
+                                    <?= !empty($row['condiments']) && strpos($row['condiments'], 'lauk') !== false ? 'checked' : '' ?>>
+                                Lauk Lainnya
+                            </label>
+                        </div>
+
+                        <button type="submit">Perbarui Keranjang</button>
                     </form>
                     <form method="POST" action="proses/delete_cart.php">
                         <input type="hidden" name="cart_id" value="<?= $row['cart_id'] ?>">
@@ -89,43 +134,10 @@ $voucherResult = $voucherStmt->get_result();
             <?php else: ?>
             <p>Keranjang Anda kosong.</p>
             <?php endif; ?>
-        </div>
 
-        <!-- Form untuk metode pembayaran dan voucher -->
-        <div class="payment-section">
-            <button class="btn" id="paymentBtn">Pilih Metode Pembayaran</button>
-            <form method="POST" action="proses/apply_voucher.php">
-                <h3>Pilih Voucher</h3>
-                <select name="voucher_code">
-                    <option value="">Pilih Voucher</option>
-                    <?php while ($voucher = $voucherResult->fetch_assoc()): ?>
-                    <option value="<?= $voucher['code'] ?>"><?= $voucher['code'] ?> - Diskon
-                        <?= $voucher['discount_percentage'] ?>%</option>
-                    <?php endwhile; ?>
-                </select>
-                <button type="submit" class="btn">Gunakan Voucher</button>
-            </form>
-        </div>
 
-        <!-- Pop-up untuk metode pembayaran -->
-        <div class="popup" id="popup">
-            <div class="popup-content">
-                <button class="close-btn" id="closeButton">&times;</button>
-                <h2>Opsi Pembayaran</h2>
-                <div class="payment-options">
-                    <button class="payment-btn">
-                        <img src="img/kartu.png" alt="Kartu"> Kartu Kredit
-                    </button>
-                    <button class="payment-btn">
-                        <img src="img/dompet.png" alt="Dompet"> E-Wallet
-                    </button>
-                    <button class="payment-btn">
-                        <img src="img/tunai.png" alt="Tunai"> Tunai
-                    </button>
-                </div>
-            </div>
+            <!-- Tombol Bayar Sekarang -->
         </div>
-    </div>
 </body>
 
 </html>

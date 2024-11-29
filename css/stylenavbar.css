@@ -57,31 +57,19 @@ header {
 	font-size: 14px;
 }
 
-/* CSS untuk tombol "Bayar Sekarang" di header */
+.payment-section {
+	margin-top: 10px;
+}
+
 .pay-now-header {
-	background-color: #4caf50; /* Warna tombol hijau */
+	background-color: #4caf50;
 	color: white;
-	font-size: 16px;
-	padding: 10px 20px;
-	text-decoration: none;
+	padding: 12px 20px;
 	border-radius: 5px;
+	text-decoration: none;
 	display: inline-block;
-	margin-right: 20px; /* Memberikan jarak antara tombol dan elemen lainnya */
-	transition: background-color 0.3s ease; /* Menambahkan transisi untuk background-color */
 }
 
-/* Efek hover untuk tombol "Bayar Sekarang" */
 .pay-now-header:hover {
-	background-color: #45a049 !important; /* Warna hijau lebih gelap dengan prioritas lebih tinggi */
-}
-
-/* Mengatur posisi login dan tombol dalam elemen yang sama */
-.login {
-	display: flex;
-	align-items: center;
-}
-
-/* Jika ingin memastikan tombol tetap pada posisi kiri */
-.login a {
-	margin-right: 10px;
+	background-color: #45a049;
 }
