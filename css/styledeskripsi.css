@@ -1,0 +1,202 @@
+/* General Reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background: linear-gradient(to bottom, #ffeb80, #f8f8f8);
+}
+
+/* Header Styles */
+.header-container {
+	background-color: #ffcc00;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between; /* Mengatur elemen di sisi kiri dan kanan */
+	align-items: center;
+}
+
+.back-button {
+	background-color: #ffcc00;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 5px 15px;
+	font-size: 16px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.settings-icon img {
+	width: 30px;
+	height: 30px;
+}
+
+.settings-icon {
+	display: flex; /* Pastikan elemen berada dalam flex container */
+	justify-content: flex-end; /* Elemen berada di kanan */
+}
+
+/* Main Product Section */
+.product-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 20px;
+	background-color: #f9f9f9; /* Tambahkan warna latar belakang */
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling untuk gambar produk */
+.product-image {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+}
+
+.product-image img {
+	width: 300px;
+	height: auto;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rating-box {
+	background-color: #ffcc00;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+	font-size: 14px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-box p:first-child {
+	margin-bottom: 5px;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #555;
+}
+
+.rating-box .star-icon {
+	color: #f39c12;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+/* Detail produk */
+.product-details {
+	flex: 2;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 15px;
+	font-size: 16px;
+	color: #333;
+
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details h1 {
+	font-size: 24px;
+	color: #222;
+	margin-bottom: 10px;
+	background-color: #fff4d9;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details p {
+	margin: 0;
+	font-size: 16px;
+	background-color: #fff4d9;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.description p {
+	background-color: #fff4d9;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 10px 15px;
+	color: #333;
+	font-size: 14px;
+}
+
+/* Footer Buttons */
+footer {
+	background-color: #ffcc00;
+	padding: 10px;
+	display: flex;
+	justify-content: space-around;
+}
+
+.footer-buttons .action-button {
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.footer-buttons .action-button:hover {
+	background-color: #333;
+	color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	footer {
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.footer-buttons .action-button {
+		width: 90%;
+		text-align: center;
+	}
+}
+
+footer {
+	background-color: #ffcc00;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	justify-content: space-around;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-buttons .action-button {
+	position: left;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.footer-buttons .action-button:hover {
+	background-color: #333;
+	color: white;
+}

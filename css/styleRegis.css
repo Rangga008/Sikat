@@ -1,0 +1,147 @@
+/* Reset CSS */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background: linear-gradient(to bottom, #fff9db, #ffcc00);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.register-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.register-box {
+	background-color: #ffe82b;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	width: 100%;
+	max-width: 400px;
+}
+
+h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+input {
+	padding: 10px;
+	border: none;
+	border-radius: 25px;
+	outline: none;
+	font-size: 14px;
+}
+
+input::placeholder {
+	color: #ccc;
+}
+
+.register-button {
+	padding: 10px;
+	background-color: #00ff00;
+	color: #000;
+	border: none;
+	border-radius: 25px;
+	font-size: 16px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.register-button:hover {
+	background-color: #00e600;
+}
+
+p {
+	margin-top: 15px;
+	font-size: 14px;
+}
+
+p a {
+	color: #000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+p a:hover {
+	text-decoration: underline;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+	.register-box {
+		width: 90%;
+		padding: 20px;
+	}
+
+	input {
+		font-size: 12px;
+	}
+
+	.register-button {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 480px) {
+	h2 {
+		font-size: 20px;
+	}
+
+	input {
+		padding: 8px;
+		font-size: 12px;
+	}
+
+	.register-button {
+		padding: 8px;
+		font-size: 12px;
+	}
+}
+
+/* Menambahkan gaya untuk tombol close */
+/* Menambahkan gaya untuk tombol close */
+.register-box {
+	position: relative; /* Tambahkan posisi relatif pada box untuk penempatan tombol */
+	padding: 20px;
+	border: 1px solid #cccccc;
+	border-radius: 10px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	width: 300px;
+	background-color: yellow;
+}
+
+.close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 30px; /* Ukuran font lebih besar untuk tombol X */
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.close-button:hover {
+	color: #ff0000;
+}

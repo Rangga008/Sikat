@@ -1,0 +1,246 @@
+/* Reset Styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* General Styles */
+html,
+body {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto; /* Tambahkan scroll untuk seluruh halaman */
+	background-color: #f4f4f4;
+	font-family: Arial, sans-serif;
+}
+
+/* Container */
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%; /* Pastikan elemen meluas sepanjang layar */
+	background-color: #fff;
+}
+
+/* Header */
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #ffd700;
+	padding: 20px;
+}
+
+/* Profile Section */
+.profile-section {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+	background-color: #fff8d1;
+}
+
+.profile-card,
+.contact-card {
+	width: 45%;
+	padding: 20px;
+	background-color: #ffec99;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Section */
+.product-section {
+	padding: 20px;
+}
+
+/* Pengaturan untuk item produk */
+.product-item {
+	display: flex; /* Membuat flex container untuk menata elemen */
+	align-items: center; /* Menyelaraskan item secara vertikal */
+	justify-content: space-between; /* Menjaga jarak antara produk info dan tombol aksi */
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #fff8d1;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gaya untuk gambar produk */
+.product-item .product-img {
+	max-width: 100%; /* Membatasi lebar gambar agar tidak melebihi wadahnya */
+	height: auto; /* Menjaga rasio aspek gambar */
+	object-fit: contain; /* Menyesuaikan gambar dengan ukuran wadah tanpa merusak proporsi */
+	max-height: 150px; /* Batasi tinggi gambar agar tidak terlalu besar */
+}
+
+/* Pengaturan informasi produk */
+.product-info {
+	display: flex;
+	flex-direction: column;
+	margin-left: 15px; /* Menambahkan jarak antara gambar dan teks */
+	flex-grow: 1; /* Agar informasi produk mengambil ruang sisa */
+}
+
+/* Pengaturan untuk tombol aksi */
+.product-actions {
+	display: flex;
+	flex-direction: column; /* Menata tombol secara vertikal */
+	align-items: flex-end; /* Menyusun tombol di sisi kanan */
+	gap: 10px; /* Jarak antar tombol */
+	justify-content: center; /* Menjaga tombol tetap terpusat secara vertikal */
+}
+
+.add-product {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.add-button {
+	width: 60px;
+	height: 60px;
+	background-color: #000;
+	color: #fff;
+	border: none;
+	border-radius: 50%;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+/* Button Styles */
+.edit-button {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.delete-button {
+	background-color: #f44336;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+/* Gaya untuk tombol edit */
+.edit-buttonp {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: auto;
+}
+
+/* Gaya untuk tombol delete */
+.delete-buttonp {
+	background-color: #f44336;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: auto;
+}
+.profile-card,
+.contact-card {
+	background-color: #fff;
+	padding: 20px;
+	margin-bottom: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+form label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+form input {
+	padding: 8px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+form button {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+form button:hover {
+	background-color: #45a049;
+}
+/* Style untuk Modal */
+.modal {
+	display: none; /* Modal tidak tampil secara default */
+	position: fixed;
+	z-index: 1; /* Di atas konten lainnya */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Konten dalam modal */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 400px;
+	border-radius: 10px;
+}
+
+/* Tombol tutup modal */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+button {
+	width: 30%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+button {
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #45a049;
+}

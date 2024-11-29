@@ -1,0 +1,87 @@
+/* Header Styles */
+header {
+	background-color: #ffcc00;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header-container {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo img {
+	width: 40px;
+	height: 40px;
+}
+
+.search-bar {
+	flex-grow: 1;
+	margin: 0 20px;
+	display: flex;
+}
+
+.search-bar input {
+	flex-grow: 1;
+	padding: 8px;
+	border: none;
+	border-radius: 5px 0 0 5px;
+}
+
+.search-bar button {
+	background-color: #ffffff;
+	border: none;
+	padding: 8px;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+}
+
+.search-bar button img {
+	background-color: #ffffff;
+	width: 20px;
+	height: 20px;
+}
+
+.header-icons img {
+	width: 25px;
+	margin: 0 5px;
+}
+
+.login a {
+	color: #333;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+/* CSS untuk tombol "Bayar Sekarang" di header */
+.pay-now-header {
+	background-color: #4caf50; /* Warna tombol hijau */
+	color: white;
+	font-size: 16px;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 5px;
+	display: inline-block;
+	margin-right: 20px; /* Memberikan jarak antara tombol dan elemen lainnya */
+	transition: background-color 0.3s ease; /* Menambahkan transisi untuk background-color */
+}
+
+/* Efek hover untuk tombol "Bayar Sekarang" */
+.pay-now-header:hover {
+	background-color: #45a049 !important; /* Warna hijau lebih gelap dengan prioritas lebih tinggi */
+}
+
+/* Mengatur posisi login dan tombol dalam elemen yang sama */
+.login {
+	display: flex;
+	align-items: center;
+}
+
+/* Jika ingin memastikan tombol tetap pada posisi kiri */
+.login a {
+	margin-right: 10px;
+}
