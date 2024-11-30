@@ -46,43 +46,36 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-container">
-                <div class="logo">
-                    <a href="index.php"><img src="img/logo.png" alt="Logo"></a>
-                </div>
-                <form action="search.php" method="GET">
-                    <div class="search-bar">
-                        <input type="text" name="query" placeholder="Cari produk..."
-                            value="<?= htmlspecialchars($_GET['query'] ?? '') ?>" required>
-                        <button type="submit"><img src="img/search.png" alt="Search Icon" /></button>
-                    </div>
-                </form>
-                <div class="header-icons">
-                    <a href="cart.php"><img src="img/cart.png" alt="Cart Icon" /></a>
-                    <a href="messages.php"><img src="img/chat.png" alt="Chat Icon" /></a>
-                    <a href="profile.php"><img src="img/setting.png" alt="Settings Icon" /></a>
-                    <?php if ($isLoggedIn && $role === 'admin'): ?>
-                    <a href="admin/dashboard.php"><img src="img/inbox.png" alt="Inbox Icon" /></a>
-                    <?php endif; ?>
-                </div>
-                <div class="payment-section">
-                    <a href="checkout.php" class="pay-now-header">Bayar Sekarang</a>
-                </div>
-                <div class="login">
-                    <?php if ($isLoggedIn): ?>
-                    <p><?php echo $_SESSION['username']; ?>!</p>
-                    <a href="auth/logout.php">Logout</a>
-                    <?php else: ?>
-                    <a href="auth/login.php">Login</a>
-                    <a href="auth/register.php">SignUp</a>
-                    <?php endif; ?>
-                </div>
+    <div class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.php"><img src="img/logo.png" alt="Logo"></a>
             </div>
-            <a href="index.php" class="back-link"><button class="back-button">← Kembali</button></a>
-            <h1>KERANJANG</h1>
+            <div class="header-icons">
+                <a href="cart.php"><img src="img/cart.png" alt="Cart Icon" /></a>
+                <a href="messages.php"><img src="img/chat.png" alt="Chat Icon" /></a>
+                <a href="profile.php"><img src="img/setting.png" alt="Settings Icon" /></a>
+                <?php if ($isLoggedIn && $role === 'admin'): ?>
+                <a href="admin/dashboard.php"><img src="img/inbox.png" alt="Inbox Icon" /></a>
+                <?php endif; ?>
+            </div>
+            <div class="payment-section">
+                <a href="checkout.php" class="pay-now-header">Bayar Sekarang</a>
+            </div>
+            <div class="login">
+                <?php if ($isLoggedIn): ?>
+                <p><?php echo $_SESSION['username']; ?>!</p>
+                <a href="auth/logout.php">Logout</a>
+                <?php else: ?>
+                <a href="auth/login.php">Login</a>
+                <a href="auth/register.php">SignUp</a>
+                <?php endif; ?>
+            </div>
         </div>
+        <h1>KERANJANG</h1>
+    </div>
+    <div class="container">
+
 
         <div class="content">
             <?php if ($result->num_rows > 0): ?>
@@ -104,6 +97,7 @@ $result = $stmt->get_result();
                         </div>
 
                         <!-- Condiments radio buttons -->
+                        <br>
                         <div class="condiments">
                             <label>
                                 <input type="radio" name="condiments" value="sambal"
@@ -113,7 +107,7 @@ $result = $stmt->get_result();
                             <label>
                                 <input type="radio" name="condiments" value="bawang"
                                     <?= !empty($row['condiments']) && strpos($row['condiments'], 'bawang') !== false ? 'checked' : '' ?>>
-                                Bawang
+                                Sayuran
                             </label>
                             <label>
                                 <input type="radio" name="condiments" value="lauk"
@@ -121,8 +115,6 @@ $result = $stmt->get_result();
                                 Lauk Lainnya
                             </label>
                         </div>
-
-                        <button type="submit">Perbarui Keranjang</button>
                     </form>
                     <form method="POST" action="proses/delete_cart.php">
                         <input type="hidden" name="cart_id" value="<?= $row['cart_id'] ?>">
