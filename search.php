@@ -1,9 +1,11 @@
 <?php 
 require 'connection.php'; // Koneksi ke database
 $query = $_GET['query'] ?? '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
+$query = isset($_GET['query']) ? trim($_GET['query']) : '';
+$searchQuery = "%$query%";
 
-// Jika ada pencarian
-if ($query) { 
+if ($query || $category) {
     $sql = "SELECT 
                 produk.id, 
                 produk.name, 
@@ -15,11 +17,23 @@ if ($query) {
                 users.rating_toko 
             FROM produk 
             INNER JOIN users ON produk.user_id = users.id 
-            WHERE produk.name LIKE ? 
-            ORDER BY produk.sales_count DESC, produk.rating DESC";
+            WHERE produk.name LIKE ?";
+
+    // Tambahkan filter kategori jika dipilih
+    if ($category) {
+        $sql .= " AND produk.category_id = ?";
+    }
+
+    $sql .= " ORDER BY produk.sales_count DESC, produk.rating DESC";
+
     $stmt = $conn->prepare($sql);
-    $searchQuery = "%$query%";
-    $stmt->bind_param("s", $searchQuery);
+
+    if ($category) {
+        $stmt->bind_param("si", $searchQuery, $category);
+    } else {
+        $stmt->bind_param("s", $searchQuery);
+    }
+
     $stmt->execute();
     $result = $stmt->get_result();
 } else { 
@@ -61,7 +75,7 @@ if ($query) {
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo '<div class="content-box">';
-                echo '<a href="deskripsi.php?id=' . $row['id'] . '">'; // Link ke deskripsi.php
+                echo '<a href="deskripsi.php?id=' . $row['id'] . '">';
                 echo '<img src="img/' . htmlspecialchars($row['photo']) . '" alt="' . htmlspecialchars($row['name']) . '" class="product-img">';
                 echo '<div class="content-text">';
                 echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';

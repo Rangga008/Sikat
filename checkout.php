@@ -40,30 +40,51 @@ while ($row = $result->fetch_assoc()) {
 </head>
 
 <body>
-    <h1>Checkout</h1>
-    <div class="cart-items">
-        <?php foreach ($cart_items as $item): ?>
-        <div class="cart-item">
-            <p><?= htmlspecialchars($item['name']) ?> (x<?= $item['quantity'] ?>)</p>
-            <p>Rp <?= number_format($item['subtotal'], 0, ',', '.') ?></p>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <h1 class="logo">Checkout</h1>
+                <button class="back-button" onclick="window.location.href='cart.php';">Kembali</button>
+            </div>
+        </header>
+
+        <!-- Konten Checkout -->
+        <div class="content">
+            <h2>Detail Keranjang</h2>
+            <div class="cart-items">
+                <?php foreach ($cart_items as $item): ?>
+                <div class="cart-item">
+                    <div class="item-info">
+                        <h2><?= htmlspecialchars($item['name']) ?></h2>
+                        <p>Jumlah: <?= htmlspecialchars($item['quantity']) ?></p>
+                        <p>Subtotal: Rp <?= number_format($item['subtotal'], 0, ',', '.') ?></p>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <p><strong>Total Harga: </strong>Rp <?= number_format($total_price, 0, ',', '.') ?></p>
+
+            <!-- Form Checkout -->
+            <form method="POST" action="proses/checkout_process.php">
+                <div>
+                    <label for="payment-method">Metode Pembayaran:</label>
+                    <select name="payment_method" id="payment-method" required>
+                        <option value="cash">Cash</option>
+                        <option value="card">Kartu Kredit/Debit</option>
+                        <option value="e-wallet">E-Wallet</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="voucher-code">Kode Voucher:</label>
+                    <input type="text" name="voucher_code" id="voucher-code" placeholder="Masukkan kode voucher">
+                </div>
+
+                <button class="pay-now-header" type="submit">Bayar Sekarang</button>
+            </form>
         </div>
-        <?php endforeach; ?>
     </div>
-    <p><strong>Total Harga: </strong>Rp <?= number_format($total_price, 0, ',', '.') ?></p>
-
-    <form method="POST" action="proses/checkout_process.php">
-        <label for="payment-method">Metode Pembayaran:</label>
-        <select name="payment_method" id="payment-method" required>
-            <option value="cash">Cash</option>
-            <option value="card">Kartu Kredit/Debit</option>
-            <option value="e-wallet">E-Wallet</option>
-        </select>
-
-        <label for="voucher-code">Kode Voucher:</label>
-        <input type="text" name="voucher_code" id="voucher-code">
-
-        <button type="submit">Bayar Sekarang</button>
-    </form>
 </body>
 
 </html>

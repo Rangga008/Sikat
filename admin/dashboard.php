@@ -24,6 +24,8 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $categories_query = "SELECT id, name FROM categories";
+    $categories_result = $conn->query($categories_query);
     // Ambil data dari form untuk update profil
     $username = $_POST['username'] ?? '';
     $nama_toko = $_POST['nama_toko'] ?? '';
@@ -50,7 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Query untuk mengambil produk yang dimiliki oleh user
-$query = "SELECT * FROM produk WHERE user_id = ? ORDER BY sales_count DESC";
+$query = "SELECT produk.*, categories.name AS category_name 
+          FROM produk 
+          JOIN categories ON produk.category_id = categories.id 
+          WHERE produk.user_id = ? 
+          ORDER BY produk.sales_count DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -153,6 +159,8 @@ $result = $stmt->get_result();
                     </p>
 
                     <p>Terjual: <?= $row['sales_count'] ?></p>
+
+                    <p>Kategori: <?= htmlspecialchars($row['category_name']) ?></p>
 
                     <!-- Menambahkan informasi harga produk -->
                     <p>Harga: <?= 'Rp. ' . number_format($row['price'], 0, ',', '.') ?></p>

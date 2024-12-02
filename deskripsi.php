@@ -5,7 +5,8 @@ require 'connection.php'; // Koneksi ke database
 
 // Pastikan pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    die("Harap login terlebih dahulu.");
+    header('Location: auth/login.php');
+    exit;
 }
 
 $user_id = $_SESSION['user_id']; // Ambil ID user dari sesi

@@ -21,9 +21,25 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <form action="search.php" method="GET">
             <div class="search-bar">
+                <select name="category" style="border-radius: 5px; padding: 8px; border: none; margin-right: 5px;">
+                    <option value="">Semua Kategori</option>
+                    <?php
+            // Ambil kategori dari database
+            $sqlCategories = "SELECT id, name FROM categories";
+            $categoriesResult = $conn->query($sqlCategories);
+            while ($categoryRow = $categoriesResult->fetch_assoc()) {
+                $selected = (isset($_GET['category']) && $_GET['category'] == $categoryRow['id']) ? 'selected' : '';
+                echo '<option value="' . $categoryRow['id'] . '" ' . $selected . '>' . htmlspecialchars($categoryRow['name']) . '</option>';
+            }
+            ?>
+                </select>
                 <input type="text" name="query" placeholder="Cari produk..."
-                    value="<?= htmlspecialchars($_GET['query'] ?? '') ?>" required>
-                <button type="submit"><img src="img/search.png" alt="Search Icon" /></button>
+                    value="<?= htmlspecialchars($_GET['query'] ?? '') ?>"
+                    style="flex-grow: 1; padding: 8px; border: none; border-radius: 5px; margin-right: 5px;">
+                <button type="submit"
+                    style="padding: 0px; border: none; border-radius: 0px; background-color: #ffcc00;">
+                    <img src="img/search.png" alt="Search Icon" style="width: 30px; height: 30px;">
+                </button>
             </div>
         </form>
         <div class="header-icons">

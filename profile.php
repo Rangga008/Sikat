@@ -4,7 +4,7 @@ require 'connection.php';
 // Start session and check login
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: auth/login.php");
     exit();
 }
 
@@ -54,17 +54,16 @@ $products = $stmtProducts->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan Profil</title>
-    <link rel="stylesheet" href="css/styleprofile.css" />
+    <link rel="stylesheet" href="css/styleprofile1.css" />
 </head>
 
 <body>
+    <div class="header">
+        <button class="back-button" onclick="window.location.href='index.php'">Kembali</button>
+        <h1>Pengaturan Profil</h1>
+        <button class="logout-button" onclick="window.location.href='logout.php'">Logout</button>
+    </div>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <button class="back-button" onclick="window.location.href='index.php'">Kembali</button>
-            <h1>Pengaturan Profil</h1>
-            <button class="logout-button" onclick="window.location.href='logout.php'">Logout</button>
-        </div>
 
         <!-- Profile Section -->
         <div class="profile-section">

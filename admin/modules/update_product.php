@@ -28,6 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = $_POST['price'];
     $old_photo = $_POST['old_photo'];
     $photo = $_FILES['photo'];
+    $category_id = $_POST['category_id']; // ID kategori yang dipilih
+
+    // Periksa apakah category_id valid
+    if (empty($category_id)) {
+        echo "Kategori harus dipilih.";
+        exit;
+    }
+
 
     // Menangani foto produk
     if ($photo['error'] == UPLOAD_ERR_OK) {
@@ -99,6 +107,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label>Masukkan Harga Produk</label>
                 <input type="text" id="price" name="price" value="<?= htmlspecialchars($product['price']) ?>"
                     required />
+            </div>
+            <div class="input-group">
+                <label>Pilih Kategori</label>
+                <select name="category_id" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    <?php while ($category = $categories_result->fetch_assoc()): ?>
+                    <option value="<?= htmlspecialchars($category['id']) ?>">
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
             <button type="submit">Simpan Perubahan</button>

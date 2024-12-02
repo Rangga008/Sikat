@@ -17,6 +17,7 @@
     require_once 'connection.php';
     require 'layout/navbar.php';
     ?>
+
     <?php 
     require 'layout/slider.php';
      require 'layout/content.php';
