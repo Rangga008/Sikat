@@ -1,0 +1,64 @@
+#partnership {
+	padding: 2rem 0;
+	background: linear-gradient(
+		to right,
+		#ff0000,
+		#000000
+	); /* Latar belakang hitam */
+	color: #fff; /* Teks putih */
+	text-align: center;
+}
+
+#partnership h2 {
+	font-size: 2.5rem;
+	color: rgb(255, 255, 255); /* Teks merah untuk judul */
+	margin-bottom: 2rem;
+	text-transform: uppercase;
+}
+
+.partner-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2rem;
+}
+
+.partner-item {
+	background-color: #fff8d1; /* Latar belakang abu-abu gelap untuk tiap item */
+	border: 2px solid #ffcc00; /* Border merah */
+	border-radius: 10px;
+	padding: 1rem;
+	width: 350px; /* Lebar item diperbesar */
+	text-align: center;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	transition: all 0.3s ease;
+}
+
+.partner-item:hover {
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+	transform: translateY(-5px);
+}
+
+.product-img {
+	width: 100%;
+	height: 200px; /* Menyesuaikan ukuran gambar produk */
+	object-fit: cover;
+	border-radius: 10px;
+	margin-bottom: 1rem;
+}
+
+.content-text {
+	padding: 1rem;
+}
+
+.content-text h3 {
+	font-size: 1.5rem;
+	color: #252525;
+	margin: 0 0 1rem;
+}
+
+.content-text p {
+	font-size: 1.1rem;
+	color: #252525;
+	margin: 0.5rem 0;
+}

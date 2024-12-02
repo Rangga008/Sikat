@@ -1,6 +1,6 @@
 /* Carousel Styles */
 .carousel {
-	margin-right: 200px;
+	margin-right: 210px;
 	position: relative; /* Menggunakan relative agar anak-anak dapat diposisikan dengan benar */
 	overflow: hidden;
 	display: flex; /* Menggunakan flex untuk menengahkan konten */
