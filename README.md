@@ -52,7 +52,7 @@ SIKAT adalah aplikasi pesan makanan online yang dirancang untuk mempermudah peme
 - Tampilan yang mudah digunakan untuk pengalaman pengguna yang optimal.
 
 ### Logo dan Moto:
-**Logo:** ![Logo SIKAT](img/WhatsApp Image 2024-11-25 at 12.10.09_d4f96130.jpg)  
+**Logo:** ![Logo SIKAT](img/logo2.jpg)  
 **Moto:** "Siap Kirim Antar Tempat"
 
 ## Kontribusi
