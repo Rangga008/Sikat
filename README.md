@@ -1,6 +1,6 @@
 Berikut adalah contoh README untuk proyek GitHub Anda:
 
-```markdown
+
 # SIKAT (Siap Kirim Antar Tempat)
 
 Aplikasi pesan makanan online yang memungkinkan pengguna untuk memesan dan mengirimkan makanan langsung ke tempat tujuan. Dengan moto "Siap Kirim Antar Tempat", aplikasi ini memberikan kemudahan bagi penggunanya untuk menikmati hidangan favorit mereka.
@@ -13,7 +13,7 @@ Aplikasi pesan makanan online yang memungkinkan pengguna untuk memesan dan mengi
 - Nuriana
 
 ## Cara Penginstalan
-
+```markdown
 1. **Clone repository ini:**
    ```bash
    git clone https://github.com/username/repository-name.git
@@ -52,7 +52,7 @@ SIKAT adalah aplikasi pesan makanan online yang dirancang untuk mempermudah peme
 - Tampilan yang mudah digunakan untuk pengalaman pengguna yang optimal.
 
 ### Logo dan Moto:
-**Logo:** ![Logo SIKAT](img/logo.png)  
+**Logo:** ![Logo SIKAT](img/WhatsApp Image 2024-11-25 at 12.10.09_d4f96130.jpg)  
 **Moto:** "Siap Kirim Antar Tempat"
 
 ## Kontribusi
