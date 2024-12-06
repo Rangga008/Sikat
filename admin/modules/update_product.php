@@ -1,5 +1,15 @@
 <?php
-require_once '../../connection.php'; // Koneksi ke database
+require_once '../../connection.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit;
+}
+
+// Ambil data kategori untuk form
+$categories_query = "SELECT id, name FROM categories";
+$categories_result = $conn->query($categories_query);
 
 // Mengecek apakah ada ID produk yang dikirim melalui GET
 if (isset($_GET['id'])) {
@@ -11,66 +21,70 @@ if (isset($_GET['id'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    // Cek jika produk ditemukan
+
     if ($result->num_rows > 0) {
         $product = $result->fetch_assoc();
     } else {
         echo "Produk tidak ditemukan.";
-        exit; // Menghentikan eksekusi jika produk tidak ditemukan
+        exit; // Hentikan eksekusi jika produk tidak ditemukan
     }
+} else {
+    echo "ID produk tidak ditemukan.";
+    exit;
 }
 
 // Proses form submit untuk memperbarui data produk
+$error_message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
-    $price = $_POST['price'];
+    $price = str_replace(['Rp. ', '.', ','], '', $_POST['price']);
+    $category_id = $_POST['category_id'];
+    $photo = $_FILES['photo']['name'];
     $old_photo = $_POST['old_photo'];
-    $photo = $_FILES['photo'];
-    $category_id = $_POST['category_id']; // ID kategori yang dipilih
 
-    // Periksa apakah category_id valid
+    // Validasi kategori
     if (empty($category_id)) {
-        echo "Kategori harus dipilih.";
-        exit;
+        $error_message = "Kategori harus dipilih.";
     }
 
-
-    // Menangani foto produk
-    if ($photo['error'] == UPLOAD_ERR_OK) {
-        // Foto baru diunggah, simpan foto baru
-        $photo_name = $photo['name'];
-        $photo_tmp = $photo['tmp_name'];
-        $photo_dest = '../../uploads/' . $photo_name;
-
-        // Pindahkan foto ke direktori yang diinginkan
-        move_uploaded_file($photo_tmp, $photo_dest);
-
-        // Hapus foto lama jika ada
-        if (!empty($old_photo) && file_exists('../../uploads/' . $old_photo)) {
-            unlink('../../uploads/' . $old_photo);
+    // Validasi file upload (jika ada file baru)
+    $allowed_extensions = ['jpg', 'jpeg', 'png'];
+    if (!empty($photo)) {
+        $file_extension = strtolower(pathinfo($photo, PATHINFO_EXTENSION));
+        if (!in_array($file_extension, $allowed_extensions)) {
+            $error_message = "Format file tidak didukung.";
         }
-    } else {
-        // Jika tidak ada foto baru, gunakan foto lama
-        $photo_name = $old_photo;
     }
 
-    // Update data produk di database
-    $update_query = "UPDATE produk SET name = ?, description = ?, price = ?, photo = ? WHERE id = ?";
-    $stmt_update = $conn->prepare($update_query);
-    $stmt_update->bind_param("ssisi", $name, $description, $price, $photo_name, $id);
-    
-    if ($stmt_update->execute()) {
-        // Redirect ke halaman dashboard setelah berhasil update
-        header("Location: ../dashboard.php");
-        exit();
-    } else {
-        echo "Gagal memperbarui data produk.";
+    if (empty($error_message)) {
+        // Menangani foto produk
+        if (!empty($photo)) {
+            $photo_path = '../../img/' . basename($photo);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
+
+            // Hapus foto lama
+            if (!empty($old_photo) && file_exists('../../img/' . $old_photo)) {
+                unlink('../../img/' . $old_photo);
+            }
+        } else {
+            $photo = $old_photo; // Gunakan foto lama jika tidak ada foto baru
+        }
+
+        // Query update produk
+        $update_query = "UPDATE produk SET name = ?, description = ?, price = ?, photo = ?, category_id = ? WHERE id = ?";
+        $stmt_update = $conn->prepare($update_query);
+        $stmt_update->bind_param("ssdsii", $name, $description, $price, $photo, $category_id, $id);
+
+        if ($stmt_update->execute()) {
+            header("Location: ../dashboard.php");
+            exit();
+        } else {
+            $error_message = "Gagal memperbarui data produk.";
+        }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,74 +100,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button class="back-btn" onclick="window.location.href='../dashboard.php';">Kembali</button>
         <h1>Edit Produk</h1>
 
+        <?php if (!empty($error_message)): ?>
+        <p style="color: red;"><?= htmlspecialchars($error_message) ?></p>
+        <?php endif; ?>
+
         <form action="update_product.php?id=<?= $product['id'] ?>" method="POST" enctype="multipart/form-data">
             <div class="input-group">
-                <label for="photo">Foto Produk:</label>
-                <input type="file" id="photo" name="photo">
+                <label>Foto Produk</label>
+                <input type="file" name="photo">
                 <input type="hidden" name="old_photo" value="<?= htmlspecialchars($product['photo']) ?>">
             </div>
             <div class="input-group">
-                <label for="name">Nama Produk:</label>
-                <input type="text" id="name" name="name" value="<?= htmlspecialchars($product['name']) ?>" required>
-            </div>
-
-            <div class="input-group">
-                <label for="description">Deskripsi Produk:</label>
-                <textarea id="description" name="description"
-                    required><?= htmlspecialchars($product['description']) ?></textarea>
-            </div>
-
-            <div class="input-group">
-                <label>Masukkan Harga Produk</label>
-                <input type="text" id="price" name="price" value="<?= htmlspecialchars($product['price']) ?>"
-                    required />
+                <label>Nama Produk</label>
+                <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" required>
             </div>
             <div class="input-group">
-                <label>Pilih Kategori</label>
+                <label>Deskripsi Produk</label>
+                <textarea name="description" required><?= htmlspecialchars($product['description']) ?></textarea>
+            </div>
+            <div class="input-group">
+                <label>Harga Produk</label>
+                <input type="text" id="price" name="price" value="<?= htmlspecialchars($product['price']) ?>" required>
+            </div>
+            <div class="input-group">
+                <label>Kategori</label>
                 <select name="category_id" required>
                     <option value="">-- Pilih Kategori --</option>
                     <?php while ($category = $categories_result->fetch_assoc()): ?>
-                    <option value="<?= htmlspecialchars($category['id']) ?>">
+                    <option value="<?= htmlspecialchars($category['id']) ?>"
+                        <?= $product['category_id'] == $category['id'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($category['name']) ?>
                     </option>
                     <?php endwhile; ?>
                 </select>
             </div>
-
             <button type="submit">Simpan Perubahan</button>
         </form>
     </div>
 </body>
+
 <script>
-// Fungsi untuk menambahkan format Rupiah pada input harga
-function formatRupiah(angka, prefix) {
-    var number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-    if (ribuan) {
-        separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-    }
-
-    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-    return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-}
-
-// Event listener untuk menangani input harga
-function handlePriceInput(event) {
-    var priceInput = event.target;
-    var formattedPrice = formatRupiah(priceInput.value, 'Rp. ');
-
-    // Menghilangkan format saat menyimpan data
-    priceInput.value = formattedPrice.replace(/[^0-9]/g, '');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var priceInput = document.getElementById('price');
-    priceInput.addEventListener('input', handlePriceInput);
+var priceInput = document.getElementById('price');
+priceInput.addEventListener('input', function(e) {
+    var value = e.target.value.replace(/[^,\d]/g, '').toString();
+    e.target.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/^/, "Rp. ");
 });
 </script>
 
