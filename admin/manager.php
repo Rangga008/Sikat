@@ -112,10 +112,10 @@ $users = getAllUsers($conn);
                 <a href="../profile.php"><img src="../img/setting.png" alt="Settings Icon" /></a>
                 <?php if ($isLoggedIn): ?>
                 <?php if ($role === 'admin' || $role === 'owner'): ?>
-                <a href="admin/dashboard.php"><img src="../img/inbox.png" alt="Inbox Icon" /></ a>
+                <a href="dashboard.php"><img src="../img/inbox.png" alt="Inbox Icon" /></ a>
                     <?php endif; ?>
                     <?php if ($role === 'owner'): ?>
-                    <a href="admin/manager.php"><img src="../img/manager.png" alt="Manager Icon" /></a>
+                    <a href="manager.php"><img src="../img/manager.png" alt="Manager Icon" /></a>
                     <?php endif; ?>
                     <?php endif; ?>
             </div>

@@ -63,21 +63,27 @@ if ($insert_stmt->execute()) {
     // Get the transaction ID
     $transaction_id = $insert_stmt->insert_id;
 
-// Simpan detail barang ke `transaction_items` dan update sales_count
-foreach ($cart_items as $item) {
-    // Insert ke transaction_items
-    $item_query = "INSERT INTO transaction_items (transaction_id, product_id, quantity) 
-                   VALUES (?, ?, ?)";
-    $item_stmt = $conn->prepare($item_query);
-    $item_stmt->bind_param("iii", $transaction_id, $item['product_id'], $item['quantity']);
-    $item_stmt->execute();
+    // Simpan detail barang ke `transaction_items` dan update sales_count
+    foreach ($cart_items as $item) {
+        // Insert ke transaction_items
+        $item_query = "INSERT INTO transaction_items (transaction_id, product_id, quantity) 
+                       VALUES (?, ?, ?)";
+        $item_stmt = $conn->prepare($item_query);
+        $item_stmt->bind_param("iii", $transaction_id, $item['product_id'], $item['quantity']);
+        $item_stmt->execute();
 
-    // Update sales_count di tabel produk
-    $update_sales_query = "UPDATE produk SET sales_count = sales_count + ? WHERE id = ?";
-    $update_sales_stmt = $conn->prepare($update_sales_query);
-    $update_sales_stmt->bind_param("ii", $item['quantity'], $item['product_id']);
-    $update_sales_stmt->execute();
-}
+        // Update sales_count di tabel produk
+        $update_sales_query = "UPDATE produk SET sales_count = sales_count + ? WHERE id = ?";
+        $update_sales_stmt = $conn->prepare($update_sales_query);
+        $update_sales_stmt->bind_param("ii", $item['quantity'], $item['product_id']);
+        $update_sales_stmt->execute();
+    }
+
+    // Empty the cart after successful transaction
+    $delete_cart_query = "DELETE FROM cart WHERE user_id = ?";
+    $delete_cart_stmt = $conn->prepare($delete_cart_query);
+    $delete_cart_stmt->bind_param("i", $user_id);
+    $delete_cart_stmt->execute();
 
     // Arahkan ke halaman Transaksi Berhasil
     header('Location: ../success.php');

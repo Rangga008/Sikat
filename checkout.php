@@ -27,6 +27,15 @@ while ($row = $result->fetch_assoc()) {
     $total_price += $row['subtotal'];
     $cart_items[] = $row;
 }
+
+// Check if the cart is empty
+if (empty($cart_items)) {
+    // Redirect back to the cart page with a message
+    $_SESSION['error'] = "Keranjang Anda kosong. Silakan tambahkan produk sebelum melanjutkan ke pembayaran.";
+    header('Location: cart.php');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>

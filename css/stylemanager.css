@@ -8,15 +8,28 @@
 /* General Styles */
 html,
 body {
+	justify-content: center;
 	width: 100%;
 	height: 100%;
-	overflow-y: auto;
+	overflow-y: auto; /* Tambahkan scroll untuk seluruh halaman */
+	overflow-x: hidden; /* Prevent horizontal scrolling */
 	background-color: #f4f4f4;
-	font-family: Arial, sans-serif;
+	font-family: Arial, sans-serif; /* Set back to original font */
+}
+
+/* Container */
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%; /* Pastikan elemen meluas sepanjang layar */
+	background-color: #fff;
+	max-width: 1200px; /* Set a maximum width for the container */
+	margin: 0 auto; /* Center the container */
+	padding: 0 20px; /* Add some padding */
 }
 
 /* Header */
-.header-container {
+.header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -24,7 +37,7 @@ body {
 	padding: 20px;
 }
 
-/* Table Styles */
+/* Gaya Tabel */
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -53,13 +66,14 @@ table tr:hover {
 	background-color: #f1f1f1;
 }
 
-/* Button Styles */
 button {
 	padding: 5px 10px;
 	margin: 5px;
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
+	width: auto; /* Change to auto to fit content */
+	max-width: 150px; /* Set a maximum width */
 }
 
 button.delete {
@@ -77,7 +91,6 @@ button.update-role {
 	color: white;
 }
 
-/* Form Styles */
 form {
 	width: 100%;
 	max-width: 500px;
@@ -96,7 +109,8 @@ form label {
 
 form input,
 form select {
-	width: 100%;
+	width: 100%; /* Change to 100% to fill the form */
+	max-width: 300px; /* Set a maximum width */
 	padding: 10px;
 	margin-bottom: 15px;
 	border: 1px solid #ccc;
@@ -105,7 +119,7 @@ form select {
 }
 
 form button {
-	width: 100%;
+	width: 100%; /* Change to 100% to fill the form */
 	background-color: #4caf50;
 	color: white;
 	padding: 10px;
@@ -118,32 +132,79 @@ form button {
 form button:hover {
 	background-color: #45a049;
 }
-.alert {
+
+/* Style untuk Modal */
+.modal {
 	justify-content: center;
-	padding: 15px;
-	margin: 20px 0;
+	display: none; /* Modal tidak tampil secara default */
+	position: fixed;
+	z-index: 1; /* Di atas konten lainnya */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Konten dalam modal */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 400px;
+	border-radius: 10px;
+}
+
+/* Tombol tutup modal */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select[name="role"],
+button {
+	justify-content: center;
+	width: 30%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
 	border-radius: 5px;
 }
 
-.alert-success {
-	justify-content: center;
-	background-color: #d4edda;
-	color: #155724;
-	border: 1px solid #c3e6cb;
+button {
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	cursor: pointer;
 }
 
-.alert-danger {
-	justify-content: center;
-	background-color: #f8d7da;
-	color: #721c24;
-	border: 1px solid #f5c6cb;
+button:hover {
+	background-color: #45a049;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
-	.header-container {
+	.header {
 		flex-direction: column;
 		align-items: flex-start;
+	}
+
+	.header-icons {
+		margin-top: 10px;
 	}
 
 	form {
