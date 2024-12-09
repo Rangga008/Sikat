@@ -80,19 +80,20 @@ $result = $stmt->get_result();
             <div class="logo" href="index.php">
                 <a href="../index.php"><img src="../img/logo.png" alt="Logo"></a>
             </div>
-            <form action="search.php" method="GET">
-                <div class="search-bar">
-                    <input type="text" name="query" placeholder="Cari produk..."
-                        value="<?= htmlspecialchars($_GET['query'] ?? '') ?>" required>
-                    <button type="submit"><img src="../img/search.png" alt="Search Icon" /></button>
-                </div>
-            </form>
             <div class="header-icons">
                 <a href="../cart.php"><img src="../img/cart.png" alt="Cart Icon" /></a>
                 <a href="../messages.php"><img src="../img/chat.png" alt="Chat Icon" /></a>
                 <a href="../profile.php"><img src="../img/setting.png" alt="Settings Icon" /></a>
-                <?php if ($isLoggedIn && $role === 'admin'): ?>
-                <a href="dashboard.php"><img src="../img/inbox.png" alt="Settings Icon" /></a>
+                <?php if ($isLoggedIn): ?>
+                <!-- Jika pengguna memiliki peran admin atau owner, tampilkan ikon inbox -->
+                <?php if ($role === 'admin' || $role === 'owner'): ?>
+                <a href="admin/dashboard.php"><img src="../img/inbox.png" alt="Inbox Icon" /></a>
+                <?php endif; ?>
+
+                <!-- Jika pengguna memiliki peran hanya owner, tampilkan ikon manager -->
+                <?php if ($role === 'owner'): ?>
+                <a href="admin/manager.php"><img src="../img/manager.png" alt="Manager Icon" /></a>
+                <?php endif; ?>
                 <?php endif; ?>
             </div>
             <div class="login">

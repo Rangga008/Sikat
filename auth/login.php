@@ -57,8 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h2>LOGIN</h2>
 
             <div class="avatar">
-                <img src="https://cdn.idntimes.com/content-images/post/20230515/anime-lovers-b2134414d7608e67c18a883b34344c38_600x400.jpg"
-                    alt="User  Avatar" />
+                <img src="../img/logo2.jpg" alt="User  Avatar" />
             </div>
             <!-- Form login yang disesuaikan -->
             <form action="login.php" method="POST">
